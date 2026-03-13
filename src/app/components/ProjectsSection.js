@@ -356,6 +356,8 @@ export default function ProjectsSection() {
           .card-layout { flex-direction: column !important; }
           .card-img-col { display: none !important; }
           .card-txt-col { width: 100% !important; padding: 32px 24px !important; border-right: none !important; }
+          .stack-pills { width: 98% !important; }
+          .sec-width{width:98% !important}
         }
       `}</style>
 
@@ -387,7 +389,7 @@ export default function ProjectsSection() {
                     display: "flex",
                     flexDirection: "column",
                     maxWidth: 1280,
-                    width: "100%",
+                    width: "90%",
                     margin: "0 auto",
                     padding: "0 48px",
                     position: "relative",
@@ -574,7 +576,7 @@ function CardInner({ project: p, isActive }) {
                 </div>
 
                 {/* Stack pills */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
+                <div className="stack-pills" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
                     {p.stack.map(t => (
                         <span key={t} style={{
                             fontSize: 11, fontWeight: 600,

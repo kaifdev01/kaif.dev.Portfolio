@@ -491,7 +491,7 @@ export default function HeroSection() {
         .build-card:hover  { box-shadow:0 32px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07) !important; }
         @media (max-width:768px) {
           .hero-grid  { grid-template-columns:1fr !important; }
-          .right-col  { display:none !important; }
+          .right-col  { display:block !important; margin-top:32px; }
           .hero-h1    { font-size:38px !important; letter-spacing:-1.5px !important; }
           .hero-h1 br { display:none !important; }
           .hero-inner { width:100% !important; padding-left:20px !important; padding-right:20px !important; }

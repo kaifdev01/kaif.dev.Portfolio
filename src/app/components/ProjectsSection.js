@@ -357,7 +357,6 @@ export default function ProjectsSection() {
           .card-img-col { display: none !important; }
           .card-txt-col { width: 100% !important; padding: 32px 24px !important; border-right: none !important; }
           .stack-pills { width: 98% !important; }
-          .sec-width{width:98% !important}
         }
       `}</style>
 
@@ -389,7 +388,7 @@ export default function ProjectsSection() {
                     display: "flex",
                     flexDirection: "column",
                     maxWidth: 1280,
-                    width: "90%",
+                    width: "100%",
                     margin: "0 auto",
                     padding: "0 48px",
                     position: "relative",
@@ -648,6 +647,7 @@ function CardInner({ project: p, isActive }) {
                                 alt={p.title}
                                 width={800}
                                 height={800}
+                                loading="lazy"
                                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
                             />
                         </div>

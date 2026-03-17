@@ -1,7 +1,8 @@
+
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 // ── Data ───────────────────────────────────────────────────────────────────────
 const PROJECTS = [
@@ -206,24 +207,85 @@ export default function ProjectsSection() {
     const touchStartY = useRef(0);
     const total = PROJECTS.length;
 
-    // ── Scroll-position guard: lock only when section top is within 20px of viewport top ──
+    // ── freeze / unfreeze body scroll ─────────────────────────────────────────
+    const freezePage = useCallback(() => {
+        document.body.style.overflow = "hidden";
+        document.body.style.touchAction = "none";
+    }, []);
+
+    const unfreezePage = useCallback(() => {
+        document.body.style.overflow = "";
+        document.body.style.touchAction = "";
+    }, []);
+
+    // ── Lock: fires only when section top is at viewport top ─────────────────
+    // pauseRef lets skipSection disable locking during its own scroll transition
+    const pauseLockRef = useRef(false);
+
     useEffect(() => {
-        const checkPosition = () => {
-            if (!sectionRef.current) return;
+        const tryLock = () => {
+            if (!sectionRef.current || lockRef.current || pauseLockRef.current) return;
             const rect = sectionRef.current.getBoundingClientRect();
-            const nearTop = rect.top >= -20 && rect.top <= 20;
-            if (nearTop) {
+            if (rect.top <= 0 && rect.bottom >= window.innerHeight * 0.8) {
                 lockRef.current = true;
                 setHeaderVisible(true);
                 setSectionEntered(true);
-            } else {
-                lockRef.current = false;
+                freezePage();
             }
         };
-        window.addEventListener("scroll", checkPosition, { passive: true });
-        checkPosition();
-        return () => window.removeEventListener("scroll", checkPosition);
-    }, []);
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (!entry.isIntersecting && lockRef.current) {
+                lockRef.current = false;
+                unfreezePage();
+            }
+        }, { threshold: 0 });
+
+        const onScroll = () => tryLock();
+
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", onScroll);
+        };
+    }, [freezePage, unfreezePage]);
+
+    // ── skipSection: show card 01, then scroll to ServicesSection ─────────────
+    const skipSection = useCallback(() => {
+        const alreadyFirst = activeRef.current === 0;
+
+        // Step 1: animate back to card 01 if not already there
+        if (!alreadyFirst) {
+            animRef.current = true;
+            setDirection(-1);
+            setCardClass("card-in-bwd");
+            setPrevIndex(activeRef.current);
+            activeRef.current = 0;
+            setActiveIndex(0);
+        }
+
+        // Step 2: after card 01 lands, release lock and scroll to next section
+        setTimeout(() => {
+            animRef.current = false;
+            setPrevIndex(null);
+
+            // Pause the lock observer so it doesn't re-lock during our scroll
+            pauseLockRef.current = true;
+            lockRef.current = false;
+            unfreezePage();
+
+            // Scroll to next section
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                const next = sectionRef.current?.nextElementSibling;
+                if (next) next.scrollIntoView({ behavior: "smooth", block: "start" });
+                else window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+
+                // Re-enable lock observer after scroll animation completes (~800ms)
+                setTimeout(() => { pauseLockRef.current = false; }, 900);
+            }));
+        }, alreadyFirst ? 50 : 750);
+    }, [unfreezePage]);
 
     // ── Navigate ──────────────────────────────────────────────────────────────
     const navigate = useCallback((dir) => {
@@ -232,8 +294,10 @@ export default function ProjectsSection() {
         const next = activeRef.current + dir;
 
         if (next < 0 || next >= total) {
-            // At boundary — release lock so page can scroll past the section
+            // Clear skip flag so re-entering works normally
+            if (sectionRef._skippedRef) sectionRef._skippedRef.current = false;
             lockRef.current = false;
+            unfreezePage();
             return;
         }
 
@@ -248,9 +312,9 @@ export default function ProjectsSection() {
             animRef.current = false;
             setPrevIndex(null);
         }, 800);
-    }, [total]);
+    }, [total, unfreezePage]);
 
-    // ── Wheel (desktop) ───────────────────────────────────────────────────────
+    // ── Wheel ─────────────────────────────────────────────────────────────────
     useEffect(() => {
         const onWheel = (e) => {
             if (!lockRef.current) return;
@@ -261,29 +325,18 @@ export default function ProjectsSection() {
         return () => window.removeEventListener("wheel", onWheel);
     }, [navigate]);
 
-    // ── Touch (mobile) ────────────────────────────────────────────────────────
-    // All listeners are { passive: false } so we can call preventDefault()
-    // and stop the browser from scrolling the page while the section is locked.
+    // ── Touch ─────────────────────────────────────────────────────────────────
     useEffect(() => {
-        const onStart = (e) => {
-            touchStartY.current = e.touches[0].clientY;
-        };
-
-        const onMove = (e) => {
-            // While locked, block native scroll entirely so the page stays put
-            if (lockRef.current) e.preventDefault();
-        };
-
+        const onStart = (e) => { touchStartY.current = e.touches[0].clientY; };
+        const onMove = (e) => { if (lockRef.current) e.preventDefault(); };
         const onEnd = (e) => {
             if (!lockRef.current) return;
             const dy = touchStartY.current - e.changedTouches[0].clientY;
             if (Math.abs(dy) > 30) navigate(dy > 0 ? 1 : -1);
         };
-
         window.addEventListener("touchstart", onStart, { passive: false });
         window.addEventListener("touchmove", onMove, { passive: false });
         window.addEventListener("touchend", onEnd, { passive: false });
-
         return () => {
             window.removeEventListener("touchstart", onStart);
             window.removeEventListener("touchmove", onMove);
@@ -356,7 +409,6 @@ export default function ProjectsSection() {
           .card-layout { flex-direction: column !important; }
           .card-img-col { display: none !important; }
           .card-txt-col { width: 100% !important; padding: 32px 24px !important; border-right: none !important; }
-          .stack-pills { width: 98% !important; }
         }
       `}</style>
 
@@ -422,11 +474,12 @@ export default function ProjectsSection() {
                             </p>
                         </div>
 
-                        {/* Counter + hint */}
+                        {/* Counter + skip buttons */}
                         <div className={`hdr-fade${headerVisible ? " vis" : ""}`} style={{
                             display: "flex", alignItems: "center", justifyContent: "space-between",
                             marginBottom: 20, animationDelay: "0.22s",
                         }}>
+                            {/* Counter */}
                             <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
                                 <span style={{
                                     fontSize: 36, fontWeight: 800, color: "#fff", letterSpacing: "-2px",
@@ -438,12 +491,46 @@ export default function ProjectsSection() {
                                     / {String(total).padStart(2, "0")}
                                 </span>
                             </div>
-                            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.22)" }}>scroll to explore</span>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <polyline points="19 12 12 19 5 12" />
-                                </svg>
+
+                            {/* Right side: scroll hint + skip button */}
+                            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.22)" }}>scroll to explore</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round">
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <polyline points="19 12 12 19 5 12" />
+                                    </svg>
+                                </div>
+                                {/* Skip section button */}
+                                <button
+
+                                    onClick={skipSection}
+                                    style={{
+                                        display: "inline-flex", alignItems: "center", gap: 6,
+                                        background: "rgba(255,255,255,0.05)",
+                                        border: "0.5px solid rgba(255,255,255,0.12)",
+                                        color: "rgba(255,255,255,0.45)",
+                                        fontSize: 11, fontWeight: 600,
+                                        padding: "6px 14px", borderRadius: 99,
+                                        cursor: "pointer", letterSpacing: "0.04em",
+                                        transition: "all 0.2s ease",
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                                        e.currentTarget.style.color = "#fff";
+                                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                                        e.currentTarget.style.color = "rgba(255,255,255,0.45)";
+                                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                                    }}
+                                >
+                                    <a style={{ textDecoration: "none", color: "#f1f1f1" }} href="#services"> Skip section</a>
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                                        <polyline points="13 17 18 12 13 7" /><polyline points="6 17 11 12 6 7" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -539,7 +626,7 @@ function CardInner({ project: p, isActive }) {
                         border: `0.5px solid ${p.border}`,
                         padding: "3px 10px", borderRadius: 99, textTransform: "uppercase",
                     }}>
-                        Web Apps
+                        MERN / Next.js
                     </span>
                 </div>
 
@@ -575,7 +662,7 @@ function CardInner({ project: p, isActive }) {
                 </div>
 
                 {/* Stack pills */}
-                <div className="stack-pills" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
                     {p.stack.map(t => (
                         <span key={t} style={{
                             fontSize: 11, fontWeight: 600,
@@ -624,37 +711,27 @@ function CardInner({ project: p, isActive }) {
             </div>
 
             {/* ── Image col ── */}
-            <div className="card-img-col" style={{
-                flex: 1,
-                padding: "24px 24px 24px 20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                zIndex: 1,
-            }}>
-                <div style={{ width: "100%", height: "100%" }}>
-                    {p.image ? (
-                        <div style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 14,
-                            overflow: "hidden",
-                            position: "relative",
-                        }}>
-                            <Image
-                                src={p.image}
-                                alt={p.title}
-                                width={800}
-                                height={800}
-                                loading="lazy"
-                                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                            />
-                        </div>
-                    ) : (
-                        <ImagePlaceholder color={p.color} title={p.title} />
-                    )}
-                </div>
+            <div style={{ width: "100%", height: "100%" }}>
+//                     {p.image ? (
+                    <div style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 14,
+                        overflow: "hidden",
+                        position: "relative",
+                    }}>
+                        <Image
+                            src={p.image}
+                            alt={p.title}
+                            width={800}
+                            height={800}
+                            loading="lazy"
+                            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                        />
+                    </div>
+                ) : (
+                    <ImagePlaceholder color={p.color} title={p.title} />
+                )}
             </div>
         </div>
     );

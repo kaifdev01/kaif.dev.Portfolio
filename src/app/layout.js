@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import FloatingChat from "./components/FloatingChat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <FloatingChat />
       </body>
     </html>
   );

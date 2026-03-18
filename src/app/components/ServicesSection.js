@@ -473,8 +473,8 @@ export default function ServicesSection() {
 
                     {/* ── Bottom CTA strip ── */}
                     <div
-                        className={`svc-fade${visible ? " vis" : ""}`}
-                        className="svc-cta-strip"
+                        className={`svc-fade${visible ? " vis" : ""} svc-cta-strip`}
+                        // className="svc-cta-strip"
                         style={{
                             marginTop: 56,
                             display: "flex",

@@ -14,8 +14,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Muhammad Kaif — Full-Stack Developer",
-  description: "MERN + Next.js developer based in Pakistan",
+  title: "Muhammad Kaif — Full-Stack Developer | MERN & Next.js",
+  description: "Full-stack developer from Pakistan specializing in MERN stack, Next.js, and WordPress. 15+ projects shipped for clients in USA, UAE, UK & Saudi Arabia.",
+  keywords: ["full stack developer", "MERN stack", "Next.js developer", "WordPress developer", "Pakistan developer", "freelance developer"],
+  openGraph: {
+    title: "Muhammad Kaif — Full-Stack Developer",
+    description: "MERN + Next.js developer. 15+ projects. 5.0★ on Upwork.",
+    url: "https://kaif-dev.vercel.app",
+    type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Muhammad Kaif — Full-Stack Developer",
+    description: "MERN + Next.js developer. 15+ projects. 5.0★ on Upwork.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }) {

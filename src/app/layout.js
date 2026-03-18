@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Muhammad Kaif — Full-Stack Developer | MERN & Next.js",
-  description: "Full-stack developer from Pakistan specializing in MERN stack, Next.js, and WordPress. 15+ projects shipped for clients in USA, UAE, UK & Saudi Arabia.",
+  description: "Full-stack developer from Pakistan specializing in MERN stack, Next.js and WordPress. 15+ projects shipped for clients in USA, UAE, UK and Saudi Arabia.",
   keywords: ["full stack developer", "MERN stack", "Next.js developer", "WordPress developer", "Pakistan developer", "freelance developer"],
   openGraph: {
     title: "Muhammad Kaif — Full-Stack Developer",
@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
       <head>
+        <meta name="google-site-verification" content="pvAGbfZs6VpTy9-x-8ylcCFzM3u_KD6ej8glgjwyJ0s" />
         <link rel="icon" type="image/png" href="/favicon.svg" sizes="any" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
       </head>

@@ -99,6 +99,7 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
             ref={cardRef}
             onMouseEnter={() => onHover(s.id)}
             onMouseLeave={() => onHover(null)}
+            onClick={() => onHover(s.id)}
             style={{
                 flex: isExpanded ? "3.5" : "1",
                 minWidth: 0,
@@ -154,14 +155,14 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                     position: "relative", zIndex: 1,
                     transition: "flex-direction 0s",
                     overflow: "hidden",
-                }}>
+                }} className="svc-card-inner">
 
                     {/* ── Left / top identity block ── */}
                     <div style={{
                         flexShrink: 0,
                         width: isExpanded ? 260 : "100%",
                         transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)",
-                    }}>
+                    }} className="svc-identity">
                         {/* Number */}
                         <div style={{
                             fontSize: 11, fontWeight: 800, letterSpacing: "0.1em",
@@ -209,7 +210,9 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                         </div>
 
                         {/* Tagline — only expanded */}
-                        <div style={{
+                        <div
+                            className={`svc-tagline${isExpanded ? " active" : ""}`}
+                            style={{
                             fontSize: 13, color: "rgba(255,255,255,0.38)",
                             lineHeight: 1.6, marginTop: 10,
                             maxWidth: 220,
@@ -224,7 +227,9 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                         </div>
 
                         {/* Divider + CTA — only expanded */}
-                        <div style={{
+                        <div
+                            className={`svc-quote-btn${isExpanded ? " active" : ""}`}
+                            style={{
                             marginTop: 28,
                             opacity: isExpanded ? 1 : 0,
                             transform: isExpanded ? "translateY(0)" : "translateY(10px)",
@@ -252,7 +257,9 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                     </div>
 
                     {/* ── Right / expanded content ── */}
-                    <div style={{
+                    <div
+                        className={`svc-expanded-content${isExpanded ? " active" : ""}`}
+                        style={{
                         flex: 1, minWidth: 0,
                         opacity: isExpanded ? 1 : 0,
                         transform: isExpanded ? "translateX(0)" : "translateX(20px)",
@@ -373,15 +380,29 @@ export default function ServicesSection() {
         .svc-fade     { opacity:0; }
         .svc-fade.vis { animation:fadeUp 0.65s ease forwards; }
 
-        @media (max-width: 900px) {
-          .svc-row { flex-direction: column !important; height: auto !important; }
+        @media (max-width: 768px) {
+          .svc-section { padding: 64px 20px 56px !important; }
+          .svc-heading { font-size: 34px !important; letter-spacing: -1px !important; }
+          .svc-subtext { font-size: 14px !important; }
+          .svc-row { flex-direction: column !important; height: auto !important; gap: 12px !important; }
           .svc-row > div { flex: none !important; width: 100% !important; }
+          .svc-card-inner { flex-direction: column !important; gap: 20px !important; }
+          .svc-identity { width: 100% !important; }
+          .svc-tagline { display: none !important; }
+          .svc-tagline.active { display: block !important; }
+          .svc-quote-btn { display: none !important; }
+          .svc-quote-btn.active { display: block !important; }
+          .svc-expanded-content { display: none !important; }
+          .svc-expanded-content.active { display: flex !important; opacity: 1 !important; transform: none !important; }
+          .svc-cta-strip { flex-direction: column !important; text-align: center !important; padding: 20px !important; }
+          .svc-cta-strip a { width: 100% !important; justify-content: center !important; }
         }
       `}</style>
 
             <section
                 ref={sectionRef}
                 id="services"
+                className="svc-section"
                 style={{
                     background: "#09090f",
                     padding: "96px 48px 88px",
@@ -416,14 +437,14 @@ export default function ServicesSection() {
                     </div>
 
                     <div className={`svc-fade${visible ? " vis" : ""}`} style={{ textAlign: "center", animationDelay: "0.1s" }}>
-                        <h2 style={{ fontSize: 46, fontWeight: 800, color: "#fff", letterSpacing: "-1.8px", lineHeight: 1.08, margin: 0 }}>
+                        <h2 className="svc-heading" style={{ fontSize: 46, fontWeight: 800, color: "#fff", letterSpacing: "-1.8px", lineHeight: 1.08, margin: 0 }}>
                             What I <span style={{ color: "#a78bfa" }}>build.</span>
                         </h2>
                     </div>
 
                     <div className={`svc-fade${visible ? " vis" : ""}`} style={{ textAlign: "center", marginBottom: 56, animationDelay: "0.18s" }}>
-                        <p style={{ fontSize: 16, color: "rgba(255,255,255,0.32)", margin: "12px auto 0", maxWidth: 460, lineHeight: 1.7 }}>
-                            Hover a service to see what's included. Every project ships production-ready.
+                        <p className="svc-subtext" style={{ fontSize: 16, color: "rgba(255,255,255,0.32)", margin: "12px auto 0", maxWidth: 460, lineHeight: 1.7 }}>
+                            Tap a service to see what's included. Every project ships production-ready.
                         </p>
                     </div>
 
@@ -453,6 +474,7 @@ export default function ServicesSection() {
                     {/* ── Bottom CTA strip ── */}
                     <div
                         className={`svc-fade${visible ? " vis" : ""}`}
+                        className="svc-cta-strip"
                         style={{
                             marginTop: 56,
                             display: "flex",

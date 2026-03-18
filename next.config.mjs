@@ -7,8 +7,9 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-      },
+      }
     ],
+    domains: ["cdn.jsdelivr.net"],
   },
 
 };

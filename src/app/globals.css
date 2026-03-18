@@ -7,3 +7,18 @@
 html {
     scroll-behavior: smooth;
 }
+
+textarea::placeholder,
+input::placeholder {
+    line-height: normal;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    padding-top: 0;
+    padding-bottom: 0;
+}

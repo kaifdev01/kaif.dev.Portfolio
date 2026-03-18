@@ -2,9 +2,11 @@
 
 import AboutSection from "./components/AboutSection";
 import AskKaifSection from "./components/AskKaifSection";
+import ContactSection from "./components/ContactSection";
 import HeroSection from "./components/HeroSection";
 import ProjectsSection from "./components/ProjectsSection";
 import ServicesSection from "./components/ServicesSection";
+import TechStack from "./components/TechStack";
 
 export default function Home() {
   return (
@@ -14,6 +16,8 @@ export default function Home() {
       <ProjectsSection />
       <ServicesSection />
       <AskKaifSection />
+      <TechStack />
+      <ContactSection />
     </main>
   );
 }

@@ -293,11 +293,18 @@ export default function AskKaifSection() {
         .chat-scroll::-webkit-scrollbar { width: 3px; }
         .chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .chat-scroll::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.25); border-radius: 99px; }
+
+        @media (max-width: 768px) {
+          .ak-section { padding: 64px 16px 56px !important; }
+          .ak-heading { font-size: 34px !important; letter-spacing: -1px !important; }
+          .ak-window { width: 98% !important; margin: 0 auto !important; }
+        }
       `}</style>
 
             <section
                 ref={sectionRef}
                 id="ask-kaif"
+                className="ak-section"
                 style={{
                     background: "#09090f",
                     padding: "96px 48px 88px",
@@ -332,7 +339,7 @@ export default function AskKaifSection() {
                     </div>
 
                     <div className={`ak-fade${visible ? " vis" : ""}`} style={{ textAlign: "center", animationDelay: "0.1s" }}>
-                        <h2 style={{ fontSize: 46, fontWeight: 800, color: "#fff", letterSpacing: "-1.8px", lineHeight: 1.08, margin: 0 }}>
+                        <h2 className="ak-heading" style={{ fontSize: 46, fontWeight: 800, color: "#fff", letterSpacing: "-1.8px", lineHeight: 1.08, margin: 0 }}>
                             Ask <span style={{ color: "#a78bfa" }}>Kaif</span> anything.
                         </h2>
                     </div>
@@ -345,7 +352,7 @@ export default function AskKaifSection() {
 
                     {/* ── Chat window ── */}
                     <div
-                        className={`ak-fade${visible ? " vis" : ""}`}
+                        className={`ak-window ak-fade${visible ? " vis" : ""}`}
                         style={{
                             animationDelay: "0.28s",
                             background: "linear-gradient(160deg, rgba(16,12,30,0.99) 0%, rgba(9,7,20,0.99) 100%)",
@@ -470,14 +477,15 @@ export default function AskKaifSection() {
 
                         {/* ── Input bar ── */}
                         <div style={{
-                            padding: "0 20px 20px",
+                            padding: "0 15px 15px",
                         }}>
                             <div style={{
-                                display: "flex", alignItems: "flex-end", gap: 10,
+                                display: "flex", alignItems: "flex-end", gap: 8,
                                 background: "rgba(255,255,255,0.04)",
                                 border: "1px solid rgba(255,255,255,0.09)",
                                 borderRadius: 16, padding: "12px 14px",
                                 transition: "border-color 0.2s ease",
+
                             }}
                                 onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)"; }}
                                 onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
@@ -502,7 +510,7 @@ export default function AskKaifSection() {
                                     disabled={!input.trim() || loading}
                                     onClick={() => send()}
                                     style={{
-                                        width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+                                        width: 34, height: 34, borderRadius: 10, flexShrink: 0,
                                         background: input.trim() && !loading
                                             ? "linear-gradient(135deg,#7c3aed,#4f46e5)"
                                             : "rgba(255,255,255,0.06)",

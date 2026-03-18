@@ -213,16 +213,16 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                         <div
                             className={`svc-tagline${isExpanded ? " active" : ""}`}
                             style={{
-                            fontSize: 13, color: "rgba(255,255,255,0.38)",
-                            lineHeight: 1.6, marginTop: 10,
-                            maxWidth: 220,
-                            opacity: isExpanded ? 1 : 0,
-                            transform: isExpanded ? "translateY(0)" : "translateY(8px)",
-                            transition: "opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s",
-                            pointerEvents: isExpanded ? "auto" : "none",
-                            height: isExpanded ? "auto" : 0,
-                            overflow: "hidden",
-                        }}>
+                                fontSize: 13, color: "rgba(255,255,255,0.38)",
+                                lineHeight: 1.6, marginTop: 10,
+                                maxWidth: 220,
+                                opacity: isExpanded ? 1 : 0,
+                                transform: isExpanded ? "translateY(0)" : "translateY(8px)",
+                                transition: "opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s",
+                                pointerEvents: isExpanded ? "auto" : "none",
+                                height: isExpanded ? "auto" : 0,
+                                overflow: "hidden",
+                            }}>
                             {s.tagline}
                         </div>
 
@@ -230,12 +230,12 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                         <div
                             className={`svc-quote-btn${isExpanded ? " active" : ""}`}
                             style={{
-                            marginTop: 28,
-                            opacity: isExpanded ? 1 : 0,
-                            transform: isExpanded ? "translateY(0)" : "translateY(10px)",
-                            transition: "opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s",
-                            pointerEvents: isExpanded ? "auto" : "none",
-                        }}>
+                                marginTop: 28,
+                                opacity: isExpanded ? 1 : 0,
+                                transform: isExpanded ? "translateY(0)" : "translateY(10px)",
+                                transition: "opacity 0.4s ease 0.25s, transform 0.4s ease 0.25s",
+                                pointerEvents: isExpanded ? "auto" : "none",
+                            }}>
                             <a
                                 href="#contact"
                                 style={{
@@ -260,14 +260,14 @@ function ServiceCard({ service: s, isExpanded, onHover, index, totalVisible }) {
                     <div
                         className={`svc-expanded-content${isExpanded ? " active" : ""}`}
                         style={{
-                        flex: 1, minWidth: 0,
-                        opacity: isExpanded ? 1 : 0,
-                        transform: isExpanded ? "translateX(0)" : "translateX(20px)",
-                        transition: "opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s",
-                        pointerEvents: isExpanded ? "auto" : "none",
-                        display: "flex", flexDirection: "column", gap: 24,
-                        paddingTop: 4,
-                    }}>
+                            flex: 1, minWidth: 0,
+                            opacity: isExpanded ? 1 : 0,
+                            transform: isExpanded ? "translateX(0)" : "translateX(20px)",
+                            transition: "opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s",
+                            pointerEvents: isExpanded ? "auto" : "none",
+                            display: "flex", flexDirection: "column", gap: 24,
+                            paddingTop: 4,
+                        }}>
                         {/* Description */}
                         <p style={{
                             fontSize: 14, color: "rgba(255,255,255,0.48)",
@@ -444,7 +444,7 @@ export default function ServicesSection() {
 
                     <div className={`svc-fade${visible ? " vis" : ""}`} style={{ textAlign: "center", marginBottom: 56, animationDelay: "0.18s" }}>
                         <p className="svc-subtext" style={{ fontSize: 16, color: "rgba(255,255,255,0.32)", margin: "12px auto 0", maxWidth: 460, lineHeight: 1.7 }}>
-                            Tap a service to see what's included. Every project ships production-ready.
+                            Hover a service to see what's included. Every project ships production-ready.
                         </p>
                     </div>
 

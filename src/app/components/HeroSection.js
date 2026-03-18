@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
-const NAV_LINKS = ["work", "services", "about", "blog"];
+const NAV_LINKS = ["work", "services", "about", "tech-stack"];
 
 const STATS = [
-    { n: "15+", l: "Projects Delieverd" },
+    { n: "15+", l: "Projects Delivered" },
     { n: "3+", l: "Years Experience" },
     { n: "5.0", l: "Upwork Rating" },
 ];

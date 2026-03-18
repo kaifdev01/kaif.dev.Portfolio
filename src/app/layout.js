@@ -14,16 +14,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Kaif.dev",
-  description: "Personal Portfolio Website",
+  title: "Muhammad Kaif — Full-Stack Developer",
+  description: "MERN + Next.js developer based in Pakistan",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <link rel="icon" type="image/png" href="/favicon.svg" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
         <FloatingChat />
       </body>

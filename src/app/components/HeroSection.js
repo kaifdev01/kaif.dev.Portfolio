@@ -579,7 +579,7 @@ export default function HeroSection() {
                             animationDelay: "0.3s",
                         }}>
                             I build fast,<br />
-                            modern web apps{" "} <br />
+                            {" "}modern web apps{" "} <br />
                             <span style={{ color: "#a78bfa" }}>with AI.</span>
                         </h1>
 
@@ -612,7 +612,7 @@ export default function HeroSection() {
                             }}>
                                 View my work
                             </a>
-                            <a href="#chat" className="btn-ghost" style={{
+                            <a href="#ask-kaif" className="btn-ghost" style={{
                                 background: "rgba(255,255,255,0.055)", color: "rgba(255,255,255,0.75)",
                                 fontSize: 15, fontWeight: 500,
                                 padding: "13px 30px", borderRadius: 12,

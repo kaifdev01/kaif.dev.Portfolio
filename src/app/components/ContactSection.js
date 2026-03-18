@@ -101,10 +101,17 @@ export default function ContactSection() {
         .drop-item{cursor:pointer;border:none;font-family:inherit;text-align:left;width:100%;transition:background 0.18s}
         .drop-item:hover{background:rgba(167,139,250,0.1)!important;color:#fff!important}
         textarea{resize:vertical}
-        @media(max-width:768px){.ct-two-col{grid-template-columns:1fr!important}.cal-grid{grid-template-columns:1fr!important}}
+        @media(max-width:768px){
+          .ct-two-col{grid-template-columns:1fr!important}
+          .cal-grid{grid-template-columns:1fr!important}
+          .ct-section{padding:64px 16px 56px!important}
+          .ct-card{padding:28px 20px!important;width:99%!important;box-sizing:border-box!important}
+          .ct-submit-row{flex-direction:column!important;align-items:stretch!important}
+          .ct-submit-row button{width:100%!important;justify-content:center!important}
+        }
       `}</style>
 
-            <section ref={sectionRef} id="contact" style={{ background: "#09090f", padding: "96px 48px 88px", fontFamily: "'Geist','Inter','Helvetica Neue',sans-serif", position: "relative", overflow: "hidden" }}>
+            <section ref={sectionRef} id="contact" className="ct-section" style={{ background: "#09090f", padding: "96px 48px 88px", fontFamily: "'Geist','Inter','Helvetica Neue',sans-serif", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: `linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)`, backgroundSize: "72px 72px" }} />
                 <div style={{ position: "absolute", top: -60, left: "50%", transform: "translateX(-50%)", width: 700, height: 400, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.09) 0%,transparent 65%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: -60, right: "5%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle,rgba(96,217,250,0.05) 0%,transparent 70%)", pointerEvents: "none" }} />
@@ -146,7 +153,7 @@ export default function ContactSection() {
                     </div>
 
                     {/* Card */}
-                    <div className={`ct-fade${visible ? " vis" : ""}`} style={{ animationDelay: "0.34s", background: "linear-gradient(160deg,rgba(16,12,30,0.99) 0%,rgba(9,7,20,0.99) 100%)", border: "1px solid rgba(167,139,250,0.15)", borderRadius: 24, padding: "44px 48px", boxShadow: "0 32px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(124,58,237,0.08)", position: "relative", overflow: "hidden" }}>
+                    <div className={`ct-card ct-fade${visible ? " vis" : ""}`} style={{ animationDelay: "0.34s", background: "linear-gradient(160deg,rgba(16,12,30,0.99) 0%,rgba(9,7,20,0.99) 100%)", border: "1px solid rgba(167,139,250,0.15)", borderRadius: 24, padding: "44px 48px", boxShadow: "0 32px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(124,58,237,0.08)", position: "relative", overflow: "hidden" }}>
                         <div style={{ position: "absolute", top: -80, left: "50%", transform: "translateX(-50%)", width: 400, height: 300, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.1) 0%,transparent 70%)", pointerEvents: "none" }} />
 
                         {/* MESSAGE TAB */}
@@ -199,7 +206,7 @@ export default function ContactSection() {
                                             <div style={{ marginBottom: 16, padding: "12px 16px", background: "rgba(239,68,68,0.08)", border: "0.5px solid rgba(239,68,68,0.2)", borderRadius: 10, fontSize: 13, color: "rgba(239,68,68,0.9)" }}>{errorMsg}</div>
                                         )}
 
-                                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+                                        <div className="ct-submit-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
                                             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.22)", margin: 0 }}>Replies within 24 hours · kaifm9096@gmail.com</p>
                                             <button type="submit" disabled={!isValid || status === "sending"} className="submit-btn" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: isValid ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "rgba(255,255,255,0.06)", color: isValid ? "#fff" : "rgba(255,255,255,0.25)", fontSize: 14, fontWeight: 700, padding: "13px 32px", borderRadius: 12, boxShadow: isValid ? "0 8px 28px rgba(124,58,237,0.4)" : "none", letterSpacing: "-0.2px" }}>
                                                 {status === "sending" ? (<><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: "spin 0.8s linear infinite" }}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>Sending…</>) : (<>Send Message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></>)}

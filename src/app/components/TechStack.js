@@ -25,6 +25,10 @@ const TOOLS_DATA = {
     "JWT Auth": { src: `${CDN}/javascript/javascript-original.svg`, label: "JWT" },
     "Multer": { src: `${CDN}/nodejs/nodejs-original.svg`, label: "Multer" },
     "REST APIs": { src: `${CDN}/postman/postman-original.svg` },
+    "Supabase": { src: `${CDN}/supabase/supabase-original.svg` },
+    "Firebase": { src: `${CDN}/firebase/firebase-original.svg` },
+    "Clerk": { src: "https://clerk.com/favicon.ico" },
+    "NextAuth": { src: `${CDN}/nextjs/nextjs-original.svg`, invert: true },
     // CMS
     "WordPress": { src: `${CDN}/wordpress/wordpress-original.svg` },
     "Elementor": { src: `${CDN}/wordpress/wordpress-original.svg` },
@@ -41,6 +45,14 @@ const TOOLS_DATA = {
     "VS Code": { src: `${CDN}/vscode/vscode-original.svg` },
     "Figma": { src: `${CDN}/figma/figma-original.svg` },
     "Photoshop": { src: `${CDN}/photoshop/photoshop-original.svg` },
+    "AWS": { src: `${CDN}/amazonwebservices/amazonwebservices-original-wordmark.svg` },
+    "Linux": { src: `${CDN}/linux/linux-original.svg` },
+    "Render": { src: "https://render.com/favicon.ico" },
+    // AI Tools
+    "ChatGPT": { src: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg", invert: true },
+    "Claude": { src: "https://claude.ai/favicon.ico" },
+    "Cursor": { src: "https://cursor.sh/favicon.ico", invert: true },
+    "Bolt": { src: "https://bolt.new/favicon.ico" },
     // Skills
     "SEO Basics": { src: `${CDN}/google/google-original.svg` },
     "UI/UX Design": { src: `${CDN}/figma/figma-original.svg` },
@@ -61,7 +73,7 @@ const CATEGORIES = [
     {
         id: "backend", label: "Backend",
         color: "#a78bfa", accent: "rgba(167,139,250,0.12)", border: "rgba(167,139,250,0.25)",
-        tools: ["Node.js", "Express.js", "MongoDB", "Mongoose", "Socket.io", "REST APIs", "JWT Auth", "Multer", "API Integration"],
+        tools: ["Node.js", "Express.js", "MongoDB", "Mongoose", "Socket.io", "REST APIs", "JWT Auth", "Multer", "API Integration", "Supabase", "Firebase", "Clerk", "NextAuth"],
     },
     {
         id: "cms", label: "CMS & Web",
@@ -71,12 +83,12 @@ const CATEGORIES = [
     {
         id: "tools", label: "Tools & Deploy",
         color: "#fb923c", accent: "rgba(251,146,60,0.12)", border: "rgba(251,146,60,0.25)",
-        tools: ["Git", "GitHub", "Vercel", "Netlify", "Cloudinary", "Postman", "XAMPP", "VS Code", , "Photoshop"],
+        tools: ["Git", "GitHub", "Vercel", "Netlify", "Cloudinary", "Postman", "XAMPP", "VS Code", "Photoshop", "AWS", "Linux", "Render"],
     },
     {
-        id: "skills", label: "Other Skills",
+        id: "ai", label: "AI Tools",
         color: "#f472b6", accent: "rgba(244,114,182,0.12)", border: "rgba(244,114,182,0.25)",
-        tools: ["SEO Basics", "Debugging", "Performance", "Problem Solving", "Responsive Design", "API Testing"],
+        tools: ["ChatGPT", "Claude", "Cursor", "Bolt"],
     },
 ];
 
@@ -335,7 +347,7 @@ export default function TechStack() {
                         animationDelay: "0.4s",
                     }}>
                         {[
-                            { n: "35+", l: "Technologies", c: "#a78bfa" },
+                            { n: "45+", l: "Technologies", c: "#a78bfa" },
                             { n: "3+", l: "Years of use", c: "#60d9fa" },
                             { n: "15+", l: "Projects built", c: "#4ade80" },
                             { n: "5★", l: "Upwork Rating", c: "#fbbf24" },

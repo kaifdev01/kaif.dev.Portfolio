@@ -207,10 +207,16 @@ export default function FloatingChat() {
 
         .fc-scroll::-webkit-scrollbar { width: 2px; }
         .fc-scroll::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.2); border-radius: 99px; }
+
+        @media (max-width: 480px) {
+          .fc-wrapper { bottom: 0 !important; right: 0 !important; left: 0 !important; padding: 0 12px 12px !important; align-items: stretch !important; }
+          .float-window { width: 100% !important; height: 88vh !important; border-radius: 20px 20px 16px 16px !important; }
+          .fc-toggle { align-self: flex-end !important; }
+        }
       `}</style>
 
             {/* ── Floating button ── */}
-            <div style={{
+            <div className="fc-wrapper" style={{
                 position: "fixed",
                 bottom: 28,
                 right: 28,
@@ -439,6 +445,7 @@ export default function FloatingChat() {
 
                 {/* ── Toggle button ── */}
                 <button
+                    className="fc-toggle"
                     onClick={() => setOpen(o => !o)}
                     style={{
                         width: 56, height: 56, borderRadius: "50%",

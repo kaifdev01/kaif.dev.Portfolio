@@ -262,14 +262,14 @@ export default function TechStack() {
 
             <section
                 ref={sectionRef}
-                id="stack"
+                id="tech-stack"
                 style={{
                     background: "#09090f", padding: "40px 0 0",
                     fontFamily: "'Geist','Inter','Helvetica Neue',sans-serif",
                     position: "relative", overflow: "hidden",
                 }}
             >
-                <div id="tech-stack" style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: `linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)`, backgroundSize: "72px 72px" }} />
+                <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: `linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)`, backgroundSize: "72px 72px" }} />
                 <div style={{ position: "absolute", top: -80, right: "10%", width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.07) 0%,transparent 70%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: 200, left: "8%", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle,rgba(96,217,250,0.05) 0%,transparent 70%)", pointerEvents: "none" }} />
 

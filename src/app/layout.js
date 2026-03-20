@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Kaif — Freelance Full-Stack Developer | MERN, Next.js & WordPress",
+  title: "Kaif.dev — Freelance Full-Stack Developer | MERN, Next.js & WordPress",
   description: "Freelance full-stack developer from Pakistan specializing in MERN stack, Next.js and WordPress. 15+ projects shipped for clients. Available for hire.",
   keywords: ["full stack developer", "freelance full stack developer", "MERN stack developer", "Next.js developer", "WordPress developer", "Pakistan developer", "hire freelance developer", "React developer for hire", "Node.js developer Pakistan"],
   authors: [{ name: "Muhammad Kaif" }],

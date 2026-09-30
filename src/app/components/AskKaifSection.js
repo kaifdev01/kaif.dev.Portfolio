@@ -163,6 +163,7 @@ export default function AskKaifSection() {
     const bottomRef = useRef(null);
     const inputRef = useRef(null);
     const sectionRef = useRef(null);
+    const chatScrollRef = useRef(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -173,9 +174,11 @@ export default function AskKaifSection() {
         return () => observer.disconnect();
     }, []);
 
-    // Auto-scroll to bottom on new message
+    // Auto-scroll to bottom on new message — scroll only inside chat box
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (chatScrollRef.current) {
+            chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
+        }
     }, [messages, loading]);
 
     // ── Send message ─────────────────────────────────────────────────────────
@@ -186,6 +189,11 @@ export default function AskKaifSection() {
         setStarted(true);
         setInput("");
         setError(null);
+
+        // Reset textarea height
+        if (inputRef.current) {
+            inputRef.current.style.height = "auto";
+        }
 
         const userMsg = { role: "user", content };
         const newMessages = [...messages, userMsg];
@@ -225,7 +233,6 @@ export default function AskKaifSection() {
             setError(err.message || "Something went wrong. Please try again.");
         } finally {
             setLoading(false);
-            setTimeout(() => inputRef.current?.focus(), 100);
         }
     };
 
@@ -404,6 +411,7 @@ export default function AskKaifSection() {
 
                         {/* ── Messages area ── */}
                         <div
+                            ref={chatScrollRef}
                             className="chat-scroll"
                             style={{
                                 height: 380,
@@ -457,7 +465,7 @@ export default function AskKaifSection() {
                                 </div>
                             )}
 
-                            <div ref={bottomRef} />
+                            <div ref={bottomRef} style={{ height: 1 }} />
                         </div>
 
                         {/* ── Preset prompts ── */}

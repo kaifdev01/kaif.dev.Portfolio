@@ -4,7 +4,7 @@ export async function POST(req) {
     try {
         const { contents } = await req.json();
 
-        const models = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-2.5-flash"];
+        const models = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-1.5-flash"];
         let data, response;
 
         for (const model of models) {
